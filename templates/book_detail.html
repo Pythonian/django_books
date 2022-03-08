@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row gx-5">
+            <div class="col-lg-4">
+                <div 1class="img-big-wrap">
+                    <img width="389px" height="480px" src="{{ book.cover.url }}">
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="ps-lg-3">
+                    {% include '_alerts.html' %}
+                    <h3 class="title text-dark">{{ book.title }}</h3>
+                    <div class="mb-3">By: {{ book.author }}</div>
+
+                    <p>{{ book.summary|linebreaks }}</p>
+
+                    <dl class="row">
+                        <dt class="col-3">Genre</dt>
+                        <dd class="col-9"><a href="{% url 'genre_detail' book.genre.slug %}">{{ book.genre }}</a></dd>
+
+                        <dt class="col-3">Date of publication</dt>
+                        <dd class="col-9">{{ book.publication_date|date:"F, Y" }}</dd>
+
+                        <dt class="col-3">Pages</dt>
+                        <dd class="col-9">{{ book.pages }}</dd>
+
+                        <dt class="col-3">ISBN No.</dt>
+                        <dd class="col-9">{{ book.isbn }}</dd>
+
+                        <dt class="col-3">Publisher</dt>
+                        <dd class="col-9">{{ book.publisher }}</dd>
+                    </dl>
+
+                    <a href="{{ book.book_file.url }}" target="_blank" class="btn  btn-info"> Read now </a>
+                    {% if request.user.is_authenticated %}
+                        {% if favorite %}
+                            <a href="{% url 'add_to_library' book.id %}" class="btn  btn-warning">Remove from library</a> 
+                        {% else %}
+                            <a href="{% url 'add_to_library' book.id %}" class="btn  btn-success">Add to library</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

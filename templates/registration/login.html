@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="col-md-6 bg-light mx-auto">
+            <div class="d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-12 mx-auto">
+                            <h4 class="text-center">Login to African Lit.</h4>
+                            <form action="" method="post" class="p-4 rounded">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <hr class="my-4">
+                                <button class="w-100 btn btn-primary" type="submit">Login</button>
+                            </form>
+                            <p class="small text-center">
+                                <a href="{% url 'signup' %}">Register for an account</a>
+                            </p> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

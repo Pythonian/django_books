@@ -1,0 +1,8 @@
+<div class="col-3">
+    <div class="card border-0">        
+        <a href="{% url 'book_detail' book.id %}"> 
+            <img class="mb-2 card-img" height="330" width="220" src="{% if book.cover %}{{ book.cover.url }}{% else %}https://via.placeholder.com/220x330{% endif %}"> 
+            <span>{{ book.author }}</span>
+        </a>
+    </div>
+</div>
