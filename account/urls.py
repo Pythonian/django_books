@@ -10,4 +10,6 @@ urlpatterns = [
     path('login/',
          auth_views.LoginView.as_view(), name='login'),
     path('profile/', views.profile, name='profile'),
+    path('settings/', views.settings, name='settings'),
+    path('stories/', views.stories, name='stories'),
 ]

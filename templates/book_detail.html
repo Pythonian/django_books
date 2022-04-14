@@ -36,7 +36,7 @@
                         <dd class="col-9">{{ book.publisher }}</dd>
                     </dl>
 
-                    <a href="{{ book.book_file.url }}" target="_blank" class="btn  btn-info"> Read now </a>
+                    <a href="{{ book.book_file.url }}" target="_blank" class="btn  btn-info" download> Download now </a>
                     {% if request.user.is_authenticated %}
                         {% if favorite %}
                             <a href="{% url 'add_to_library' book.id %}" class="btn  btn-warning">Remove from library</a> 

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load humanize %}
 {% block title %}Profile{% endblock %}
 
 {% block content %}
@@ -10,10 +10,10 @@
             <aside class="col-lg-3">
                 <div class="card p-3 h-100">
                     <nav class="nav flex-column nav-pills"> 
-                    	<a class="nav-link active" href="#">My Profile</a> 
-                    	<a class="nav-link" href="#">My Library</a> 
-                    	<a class="nav-link" href="#">My Stories</a>
-                    	<a class="nav-link" href="#">Log out</a> 
+                    	<a class="nav-link active" href="{% url 'profile' %}">My Profile</a>
+                    	<a class="nav-link" href="{% url 'stories' %}">My Stories</a>
+                    	<a class="nav-link" href="{% url 'settings' %}">Settings</a>
+                    	<a class="nav-link" href="{% url 'logout' %}">Log out</a> 
                     </nav>
                 </div>
             </aside>
@@ -23,14 +23,14 @@
                     <div class="card-body">
                     	<header class="d-md-flex">
                             <div class="flex-shrink-0">
-                                <img class="rounded-circle" src="https://via.placeholder.com/50x50" alt="Sample Image">
+                                <img class="rounded-circle" height="50px" width="50px" src="{{ request.user.profile.avatar.url|default:'https://via.placeholder.com/50x50' }}" alt="Sample Image">
                             </div>
                             <div class="flex-grow-1 ms-3">
-                                <h5 class="m-0">Jhon Carter</h5>
-                                <small class="text-italics">Registered 2 days ago</small>
+                                <h5 class="m-0">{{ request.user.get_full_name|default:request.user.username|title }}</h5>
+                                <small class="text-italics">Registered {{ request.user.date_joined|naturalday }}</small>
                             </div>
                             <div> 
-                                <a href="#" class="btn btn-sm btn-outline-primary">Edit Profile</a>
+                                <a href="{% url 'settings' %}" class="btn btn-sm btn-outline-primary">Edit Profile</a>
                             </div>
                         </header>
                     </div>
@@ -59,13 +59,15 @@
                                     {% endif %}
                                      
                                     <div> 
-                                        <a href="{{ book.book_file.url }}" target="_blank" class="btn  btn-info"> Read now </a>
+                                        <a href="{{ book.book_file.url }}" target="_blank" class="btn  btn-info" download> Download now </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% empty %}
+                <p class="text-center">You do not have any book yet in your library.</p>
                 {% endfor %}
             </div>
         </div>

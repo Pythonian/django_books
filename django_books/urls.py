@@ -9,6 +9,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),
+    path('story/', include('story.urls', namespace='story')),
     path('genres/', views.genres, name='genres'),
     path('request/', views.request, name='request'),
     path('genre/<slug:slug>/', views.genre_detail, name='genre_detail'),

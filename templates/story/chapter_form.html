@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-{% block title %}Settings{% endblock %}
+{% block title %}{% if create %}Create{% else %}Update{% endif %} chapter {% if not create %}{{ chapter.pk }}{% endif %}{% endblock %}
 
 {% block content %}
 
@@ -11,8 +11,8 @@
                 <div class="card p-3 h-100">
                     <nav class="nav flex-column nav-pills"> 
                     	<a class="nav-link" href="{% url 'profile' %}">My Profile</a>
-                    	<a class="nav-link" href="{% url 'stories' %}">My Stories</a>
-                    	<a class="nav-link active" href="{% url 'settings' %}">Settings</a>
+                    	<a class="nav-link active" href="{% url 'stories' %}">My Stories</a>
+                    	<a class="nav-link" href="{% url 'settings' %}">Settings</a>
                     	<a class="nav-link" href="{% url 'logout' %}">Log out</a> 
                     </nav>
                 </div>
@@ -20,21 +20,21 @@
             <div class="col-lg-9">
                 {% include '_alerts.html' %}
                 <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>{% if create %}Create{% else %}Update{% endif %} chapter {% if not create %}{{ chapter.pk }}{% endif %}</h5>
+                    </div>
                     <div class="card-body">
                         <form method="post" action="" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <div class="col-lg-6 col-md-6 mb-3"> 
-                            {{ user_form|crispy }}
-                            {{ profile_form|crispy }}
-                            <button class="btn btn-primary" type="submit">Save changes</button>
-                            </div>
+                            {{ form|crispy }}
+                            <button class="btn btn-primary" type="submit">{% if create %}Create{% else %}Update{% endif %}</button>
                         </form>
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 </section>
-
 
 {% endblock %}

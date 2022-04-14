@@ -30,6 +30,7 @@ class Book(models.Model):
                             verbose_name="ISBN number of the book.")
     favorite = models.ManyToManyField(
         User, related_name='favorites', blank=True)
+    impressions = models.PositiveIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

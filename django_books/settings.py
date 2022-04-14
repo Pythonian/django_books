@@ -25,7 +25,7 @@ SECRET_KEY = 'r&s23!nol)ksy-*xlj!2+(x6ue0m%y-tia(5z)%lekl5(f@p6d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    'account',
     'book',
+    'story',
     'crispy_forms',
     'crispy_bootstrap5',
 ]
@@ -136,8 +139,10 @@ LOGOUT_REDIRECT_URL = 'home'
 
 LOGIN_URL = 'login'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'profile'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

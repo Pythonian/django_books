@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}{% if create %}Create{% else %}Update{% endif %} story{% endblock %}
+
+{% block content %}
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <aside class="col-lg-3">
+                <div class="card p-3 h-100">
+                    <nav class="nav flex-column nav-pills"> 
+                    	<a class="nav-link" href="{% url 'profile' %}">My Profile</a>
+                    	<a class="nav-link active" href="{% url 'stories' %}">My Stories</a>
+                    	<a class="nav-link" href="{% url 'settings' %}">Settings</a>
+                    	<a class="nav-link" href="{% url 'logout' %}">Log out</a> 
+                    </nav>
+                </div>
+            </aside>
+            <div class="col-lg-9">
+                {% include '_alerts.html' %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>{% if create %}Create{% else %}Update{% endif %} Story</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button class="btn btn-primary" type="submit">{% if create %}Create{% else %}Update{% endif %}</button>
+                        </form>
+                    </div>
+                </div>
+                {% if not create %}
+                <div class="card">
+                    <div class="card-header">
+                      <div class="row">
+                        <div class="col-3">
+                          <strong>Chapters</strong>
+                        </div>
+                        <div class="col-7">
+                          <strong>Title</strong>
+                        </div>
+                        <div class="col-2">
+                            <strong>Action</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush list-group-formset">
+                      {% for chapter in story.chapters.all %}
+                        <div class="list-group-item">
+                          <div class="row">
+                            <div class="col-3">
+                              {{ chapter.pk }}
+                            </div>
+                            <div class="col-7">
+                              {{ chapter.title }}
+                            </div>
+                            <div class="col-2">
+                                <a href="{% url 'story:update_chapter' story.pk chapter.pk %}">Update</a>
+                            </div>
+                          </div>
+                        </div>
+                      {% empty %}
+                        <div class="list-group-item text-center">
+                          <p class="text-muted font-italic mb-0">You haven't created any chapter for this story yet. Go ahead and <a href="{% url 'story:add_chapter' story.pk %}">add the first chapter</a>.</p>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <div class="card-footer">
+                      <a href="{% url 'story:add_chapter' story.pk %}" class="btn btn-primary btn-sm">Add chapter</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,12 +1,14 @@
 from django.shortcuts import redirect, render
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.views.generic import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import login
 
 from book.models import Book
+from story.models import Story
 
-from .forms import SignUpForm
+from .forms import SignUpForm, UserForm, ProfileForm
 
 
 class SignUpView(SuccessMessageMixin, CreateView):
@@ -18,7 +20,7 @@ class SignUpView(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('home')
+        return redirect('profile')
 
 
 def profile(request):
@@ -31,8 +33,39 @@ def profile(request):
         {'books': books, 'favorite': favorite})
 
 
-# def compare_vehicles(request):
-#     vehicles = Vehicle.objects.filter(
-#         is_available=True).filter(compares=request.user)[:3]
-#     return render(
-#         request, 'vehicle/compare.html', {'vehicles': vehicles})
+def settings(request):
+    if request.method == 'POST':
+        user_form = UserForm(
+            request.POST, instance=request.user)
+        profile_form = ProfileForm(
+            request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your account was successully updated.')
+            return redirect('profile')
+        else:
+            messages.warning(
+                request, 'There was an error while updating your account.')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+
+    template = 'settings.html'
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    }
+
+    return render(request, template, context)
+
+
+def stories(request):
+    stories = Story.objects.filter(author=request.user)
+
+    template = 'stories.html'
+    context = {
+        'stories': stories,
+    }
+
+    return render(request, template, context)
