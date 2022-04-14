@@ -50,4 +50,27 @@
     </div>
 </section>
 
+<section>
+    <div class="container my-5">
+        <div class="row gx-5">
+            <div class="col-lg-8 col-xl-6">
+                <h2 class="fw-bolder">Latest Stories</h2>
+                <p class="lead fw-normal text-muted mb-4">Browse latest stories from registered users</p>
+            </div>
+        </div>
+        <div class="row gy-3">
+            {% for story in stories %}
+            <div class="col-3">
+                <div class="card border-0">        
+                    <a href="{# url 'book_detail' book.id #}"> 
+                        <img class="mb-2 card-img" height="330" width="220" src="{% if story.poster %}{{ story.poster.url }}{% else %}https://via.placeholder.com/220x330{% endif %}"> 
+                        <span>{{ story.author.get_full_name|default:story.author|title }}</span>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
 {% endblock %}

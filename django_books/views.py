@@ -2,15 +2,18 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 
+from story.models import Story
 from book.models import Genre, Book
 from book.forms import RequestForm
 
 
 def home(request):
-    books = Book.objects.all()
+    books = Book.objects.all()[:4]
     genres = Genre.objects.all()[:4]
+    stories = Story.objects.all()[:4]
     return render(
-        request, 'home.html', {'books': books, 'genres': genres})
+        request, 'home.html',
+        {'books': books, 'genres': genres, 'stories': stories})
 
 
 def genres(request):

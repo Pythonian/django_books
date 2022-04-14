@@ -23,7 +23,7 @@
                     <div class="card-body">
                     	<header class="d-md-flex">
                             <div class="flex-shrink-0">
-                                <img class="rounded-circle" height="50px" width="50px" src="{{ request.user.profile.avatar.url|default:'https://via.placeholder.com/50x50' }}" alt="Sample Image">
+                                <img class="rounded-circle" height="50px" width="50px" src="{% if request.user.profile.avatar %}{{ request.user.profile.avatar.url }}{% else %}https://via.placeholder.com/50x50{% endif %}" alt="Sample Image">
                             </div>
                             <div class="flex-grow-1 ms-3">
                                 <h5 class="m-0">{{ request.user.get_full_name|default:request.user.username|title }}</h5>
