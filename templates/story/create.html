@@ -50,14 +50,15 @@
                       {% for chapter in story.chapters.all %}
                         <div class="list-group-item">
                           <div class="row">
-                            <div class="col-3">
-                              {{ chapter.pk }}
+                            <div class="col-2">
+                              {{ chapter.order }}
                             </div>
                             <div class="col-7">
                               {{ chapter.title }}
                             </div>
-                            <div class="col-2">
-                                <a href="{% url 'story:update_chapter' story.pk chapter.pk %}">Update</a>
+                            <div class="col-3 text-center">
+                                <a class="btn btn-primary" href="{% url 'story:update_chapter' story.pk chapter.pk %}">Update</a>
+                                <a class="btn btn-danger" href="{% url 'story:delete_chapter' story.pk chapter.pk %}">Delete</a>
                             </div>
                           </div>
                         </div>

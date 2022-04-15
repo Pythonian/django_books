@@ -3,7 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from .models import Story, Chapter
-from .forms import StoryForm, ChapterForm, StoryDeleteForm
+from .forms import (
+    StoryForm, ChapterForm, StoryDeleteForm, ChapterDeleteForm)
 
 
 def create_story(request):
@@ -53,7 +54,8 @@ def add_chapter(request, pk):
             chapter.story = story
             chapter.save()
             messages.success(
-                request, 'You have successfully added a chapter.')
+                request,
+                f'You have successfully added chapter {chapter.order}.')
             return redirect('story:change_story', story.pk)
     else:
         form = ChapterForm()
@@ -71,7 +73,7 @@ def update_chapter(request, story_pk, chapter_pk):
         if form.is_valid():
             form.save()
             messages.success(
-                request, f'You have successfully updated chapter {chapter.pk}.')
+                request, f'You"ve successfully updated chapter {chapter.pk}.')
             return redirect('story:change_story', story.pk)
     else:
         form = ChapterForm(instance=chapter)
@@ -80,8 +82,32 @@ def update_chapter(request, story_pk, chapter_pk):
         {'story': story, 'form': form, 'chapter': chapter})
 
 
+@login_required
+def delete_chapter(request, story_pk, chapter_pk):
+    story = get_object_or_404(
+        Story, pk=story_pk, author=request.user)
+    chapter = get_object_or_404(Chapter, pk=chapter_pk, story=story)
+    if request.method == 'POST':
+        form = ChapterDeleteForm(request.POST, instance=chapter)
+        if form.is_valid():
+            chapter.delete()
+            messages.success(
+                request, "Chapter successfully deleted.")
+            return redirect('story:change_story', story.pk)
+    else:
+        form = ChapterDeleteForm(instance=chapter)
+    return render(
+        request, 'story/chapter_delete.html',
+        {'story': story, 'form': form, 'chapter': chapter})
+
+
 def story_detail(request, slug):
     story = get_object_or_404(Story, slug=slug)
+    session_key = 'viewed_story_{}'.format(story.pk)
+    if not request.session.get(session_key, False):
+        story.impressions += 1
+        story.save()
+        request.session[session_key] = True
 
     return render(
         request, 'story/detail.html',

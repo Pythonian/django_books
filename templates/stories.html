@@ -30,19 +30,19 @@
                             </div>
                             
                             <div class="flex-grow-1 ms-3 p-3">
-                                <a href="{# url 'story_detail' story.id #}" class="h5 mb-1 title">{{ story.title }}</a>
+                                <a href="{% url 'story:detail' story.slug %}" class="h5 mb-1 title">{{ story.title }}</a>
                                 <p class="mb-3 text-muted">{{ story.author.get_full_name|default:story.author|title }}</p>
                                 <div class="mb-3">
                                     <h6>Chapters:</h6>
                                     {% for chapter in story.chapters.all %}
-                                    <span>{{ chapter.pk }}</span>
+                                    <span>{{ chapter.order }}</span>
                                     <span><a href="">{{ chapter.title }}</a></span>
                                     <br>
                                     {% endfor %}
                                 </div>
                                 <div class="row row-cols-auto gx-2 gy-3 align-items-center">
                                     <div> 
-                                        <a href="{# story.story_file.url #}" class="btn btn-info"> Read now </a>
+                                        <a href="{% url 'story:detail' story.slug %}" class="btn btn-info"> Read now </a>
                                         {% if request.user == story.author %}
                                         <a href="{% url 'story:change_story' story.pk %}" class="btn btn-warning"> Update </a>
                                         <a href="{% url 'story:delete' story.pk %}" class="btn btn-danger"> Delete </a>
@@ -54,7 +54,10 @@
                     </div>
                 </div>
                 {% empty %}
-                <p class="text-center">No story has been written yet.</p>
+                <p class="text-center pt-5">
+                    No story has been written yet.
+                    <br><a href="{% url 'story:create' %}">Create one</a>
+                </p>
                 {% endfor %}
             </div>
         </div>

@@ -28,6 +28,7 @@
                             {% csrf_token %}
                             {{ form|crispy }}
                             <button class="btn btn-primary" type="submit">{% if create %}Create{% else %}Update{% endif %}</button>
+                            {% if not create %}<a class="btn btn-danger" href="{% url 'story:delete_chapter' story.pk chapter.pk %}">Delete</a>{% endif %}
                         </form>
                     </div>
                 </div>

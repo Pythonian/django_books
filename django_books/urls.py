@@ -14,7 +14,7 @@ urlpatterns = [
     path('request/', views.request, name='request'),
     path('genre/<slug:slug>/', views.genre_detail, name='genre_detail'),
     path('book/<int:id>/', views.book_detail, name='book_detail'),
-    path('add-to-library/<int:id>/',
+    path('update-library/<int:id>/',
          views.add_to_library, name='add_to_library'),
     path('', views.home, name='home'),
 ]

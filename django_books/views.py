@@ -9,7 +9,7 @@ from book.forms import RequestForm
 
 def home(request):
     books = Book.objects.all()[:4]
-    genres = Genre.objects.all()[:4]
+    genres = Genre.objects.order_by('?')[:4]
     stories = Story.objects.all()[:4]
     return render(
         request, 'home.html',
@@ -38,6 +38,13 @@ def request(request):
             return redirect('request')
     else:
         form = RequestForm()
+        if request.user.is_authenticated:
+            full_name = request.user.first_name + ' ' + request.user.last_name
+            initial_data = {
+                'full_name': full_name,
+                'email': request.user.email,
+            }
+            form = RequestForm(initial=initial_data)
     return render(request, 'request.html', {'form': form})
 
 

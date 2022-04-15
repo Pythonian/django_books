@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 
 User = settings.AUTH_USER_MODEL
 
@@ -10,6 +11,10 @@ class Genre(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('genre_detail',
+                       kwargs={'slug': self.slug})
 
 
 class Book(models.Model):
@@ -34,6 +39,9 @@ class Book(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-created']
+
     def __str__(self):
         return self.title
 
@@ -47,4 +55,4 @@ class Request(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.full_name} requested for {self.title}"
+        return f"Book request: {self.title}"

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}{{ story.title }}{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row gx-5">
+            <div class="col-lg-4">
+                <img width="389px" height="480px" src="{% if story.poster %}{{ story.poster.url }}{% else %}https://via.placeholder.com/389x480{% endif %}">
+            </div>
+            <div class="col-lg-8">
+                <div class="ps-lg-4">
+                    {% include '_alerts.html' %}
+                    <h3 class="title text-dark">{{ story.title }}</h3>
+                    <div class="mb-3">
+                        By: {{ story.author.get_full_name|default:story.author|title }}
+                        &bull; Created: {{ story.created|date:"F, Y" }}
+                    </div>
+
+                    <p>{{ story.description|linebreaks }}</p>
+
+                    <div class="row mb-3">
+                        <h6>Chapters ({{ story.chapters.count }}):</h6>
+                        {% for chapter in story.chapters.all %}
+                            <dt class="col-1">{{ chapter.order|apnumber|title }}</dt>
+                            <dd class="col-11"><a href="">{{ chapter.title }}</a></dd>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

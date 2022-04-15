@@ -4,9 +4,9 @@
 {% block content %}
 <header class="bg-dark py-3">
     <div class="container">
-        <div class="row gx-5 align-items-center">
+        <div class="row">
             <div class="col-9">
-                <div class="my-5 text-center text-xl-start">
+                <div class="my-5">
                     <h1 class="fw-bolder text-white mb-2">Request for a Book</h1>
                     <p class="lead fw-normal text-white-50 mb-4">Send us information on a book you'll like to see uploaded below.</p>
                 </div>
@@ -17,34 +17,17 @@
 
 <div class="container my-5">
     <div class="row">
-        <div class="col-8 mx-auto">
+        <div class="col-7 mx-auto">
             {% include '_alerts.html' %}
             <div class="card">
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-6 mb-3"> 
-                                <label class="form-label">Full Name</label> 
-                                {{ form.full_name }}
-                            </div>
-                            <div class="col-6"> 
-                                <label class="form-label">Email Address</label> 
-                                {{ form.email }} 
-                            </div>
-                            <div class="col-lg-6 mb-3"> 
-                                <label class="form-label">Book Title</label> 
-                                {{ form.title }}
-                            </div>
-                            <div class="col-lg-6 mb-3"> 
-                                <label class="form-label">Author Name</label> 
-                                {{ form.author }} 
-                            </div>
-                        </div>
+                <div class="card-body">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
                         <button type="submit" class="btn btn-success">Send</button> 
                         <a href="{% url 'home' %}" class="btn btn-light">Cancel </a>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

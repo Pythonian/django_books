@@ -48,7 +48,6 @@
                                 <p class="mb-3 text-muted">{{ book.author }}</p>
                                 <div class="mb-3">{{ book.summary|linebreaks }}</div>
                                 <div class="row row-cols-auto gx-2 gy-3 align-items-center">
-                                    {% if request.user.is_authenticated %}
                                     <div>
                                         {% if favorite %}
                                             <a href="{% url 'add_to_library' book.id %}" class="btn  btn-warning">Remove from library</a> 
@@ -56,7 +55,6 @@
                                             <a href="{% url 'add_to_library' book.id %}" class="btn  btn-success">Add to library</a>
                                         {% endif %}
                                     </div>
-                                    {% endif %}
                                      
                                     <div> 
                                         <a href="{{ book.book_file.url }}" target="_blank" class="btn  btn-info" download> Download now </a>
