@@ -42,7 +42,9 @@
     </div>
     <div class="row gy-3">
         {% for book in books %}
+        <div class="col-lg-3 col-md-6">
             {% include '_book_list.html' %}
+        </div>
         {% empty %}
             <p>No data available.</p>
         {% endfor %}
@@ -59,17 +61,7 @@
     <div class="row gy-3">
         {% for story in stories %}
         <div class="col-lg-3 col-md-6">
-            <div class="card shadow border-0 mb-4">
-                <a href="{{ story.get_absolute_url }}">
-                    <img src="{{ story.poster.url }}" class="card-img-top" height="350" alt="{{ story.title }}">
-                </a>
-                <div class="card-body">
-                    <div class="h5">
-                        <a href="{{ story.get_absolute_url }}" class="text-decoration-none">{{ story.title }}</a>
-                    </div>
-                    <p>By: {{ story.author.get_full_name|default:story.author|title }}</p>
-                </div>
-            </div>
+            {% include '_story_list.html' %}
         </div>
         {% empty %}
             <p>No data available.</p>

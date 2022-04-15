@@ -6,7 +6,7 @@ from .models import Story, Chapter
 class StoryForm(forms.ModelForm):
     class Meta:
         model = Story
-        fields = ['poster', 'title', 'category', 'description']
+        fields = ['poster', 'title', 'description']
 
 
 class ChapterForm(forms.ModelForm):

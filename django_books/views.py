@@ -21,6 +21,16 @@ def genres(request):
     return render(request, 'genres.html', {'genres': genres})
 
 
+def books(request):
+    books = Book.objects.all()
+    return render(request, 'books.html', {'books': books})
+
+
+def stories(request):
+    stories = Story.objects.all()
+    return render(request, 'stories.html', {'stories': stories})
+
+
 def genre_detail(request, slug):
     genre = get_object_or_404(Genre, slug=slug)
     books = genre.books.all()

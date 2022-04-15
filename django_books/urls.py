@@ -11,6 +11,8 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('story/', include('story.urls', namespace='story')),
     path('genres/', views.genres, name='genres'),
+    path('books/', views.books, name='books'),
+    path('stories/', views.stories, name='stories'),
     path('request/', views.request, name='request'),
     path('genre/<slug:slug>/', views.genre_detail, name='genre_detail'),
     path('book/<int:id>/', views.book_detail, name='book_detail'),

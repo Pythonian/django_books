@@ -1,16 +1,14 @@
-<div class="col-lg-3 col-md-6">
-    <div class="card shadow border-0 mb-4">
-        <a href="{% url 'book_detail' book.id %}">
-            <img src="{{ book.cover.url }}" class="card-img-top" height="350" alt="{{ book.title }}">
-        </a>
-        <div class="position-absolute text-start top-0 start-0 w-100 p-2"> 
-            <span class="badge p-2 bg-primary">{{ book.genre }}</span> 
+<div class="card shadow border-0 mb-4">
+    <a href="{% url 'book_detail' book.id %}">
+        <img src="{{ book.cover.url }}" class="card-img-top" height="350" alt="{{ book.title }}">
+    </a>
+    <div class="position-absolute text-start top-0 start-0 w-100 p-2"> 
+        <span class="badge p-2 bg-primary">{{ book.genre }}</span> 
+    </div>
+    <div class="card-body">
+        <div class="h5">
+            <a href="{% url 'book_detail' book.id %}" class="text-decoration-none">{{ book.title }}</a>
         </div>
-        <div class="card-body">
-            <div class="h5">
-                <a href="{% url 'book_detail' book.id %}" class="text-decoration-none">{{ book.title }}</a>
-            </div>
-            <p>By: {{ book.author }}</p>
-        </div>
+        <p>By: {{ book.author }}</p>
     </div>
 </div>

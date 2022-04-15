@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}My Stories{% endblock %}
+
+{% block content %}
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <aside class="col-lg-3">
+                <div class="card p-3 h-100">
+                    <nav class="nav flex-column nav-pills"> 
+                    	<a class="nav-link" href="{% url 'profile' %}">My Profile</a>
+                    	<a class="nav-link active" href="{% url 'stories' %}">My Stories</a>
+                    	<a class="nav-link" href="{% url 'settings' %}">Settings</a>
+                    	<a class="nav-link" href="{% url 'logout' %}">Log out</a> 
+                    </nav>
+                </div>
+            </aside>
+            <div class="col-lg-9">
+                {% include '_alerts.html' %}
+                {% for story in stories %}
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        
+                        <div class="d-flex">
+                            
+                            <div class="flex-shrink-0">
+                                <img src="{% if story.poster %}{{ story.poster.url }}{% else %}https://via.placeholder.com/330x220{% endif %}" height="330" width="220" class="" alt="{{ story.title }}">
+                            </div>
+                            
+                            <div class="flex-grow-1 ms-3 p-3">
+                                <a href="{% url 'story:detail' story.slug %}" class="h5 mb-1 title">{{ story.title }}</a>
+                                <p class="mb-3 text-muted">{{ story.author.get_full_name|default:story.author|title }}</p>
+                                <div class="mb-3">
+                                    <h6>Chapters:</h6>
+                                    {% for chapter in story.chapters.all %}
+                                    <span>{{ chapter.order }}</span>
+                                    <span><a href="">{{ chapter.title }}</a></span>
+                                    <br>
+                                    {% endfor %}
+                                </div>
+                                <div class="row row-cols-auto gx-2 gy-3 align-items-center">
+                                    <div> 
+                                        <a href="{% url 'story:detail' story.slug %}" class="btn btn-info"> Read now </a>
+                                        {% if request.user == story.author %}
+                                        <a href="{% url 'story:change_story' story.pk %}" class="btn btn-warning"> Update </a>
+                                        <a href="{% url 'story:delete' story.pk %}" class="btn btn-danger"> Delete </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-center pt-5">
+                    No story has been written yet.
+                    <br><a href="{% url 'story:create' %}">Create one</a>
+                </p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

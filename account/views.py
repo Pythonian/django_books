@@ -63,7 +63,7 @@ def settings(request):
 def stories(request):
     stories = Story.objects.filter(author=request.user)
 
-    template = 'stories.html'
+    template = 'user_stories.html'
     context = {
         'stories': stories,
     }

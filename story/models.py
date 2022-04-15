@@ -3,15 +3,10 @@ from django.utils.text import slugify
 from django.conf import settings
 from django.urls import reverse
 
-from book.models import Genre
-
 
 class Story(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
-    category = models.ForeignKey(
-        Genre, blank=True, null=True,
-        on_delete=models.SET_NULL)
     description = models.TextField(max_length=2000)
     impressions = models.PositiveIntegerField(default=0)
     author = models.ForeignKey(
@@ -23,6 +18,7 @@ class Story(models.Model):
 
     class Meta:
         ordering = ['-created']
+        verbose_name_plural = 'Stories'
 
     def __str__(self):
         return self.title
@@ -40,7 +36,7 @@ class Chapter(models.Model):
     story = models.ForeignKey(
         Story, on_delete=models.CASCADE, related_name='chapters')
     order = models.PositiveSmallIntegerField(
-        'Chapter number', unique=True)
+        'Chapter number')
     title = models.CharField(max_length=200)
     body = models.TextField()
     impressions = models.PositiveIntegerField(default=0)
@@ -49,6 +45,11 @@ class Chapter(models.Model):
 
     class Meta:
         ordering = ['order']
+        unique_together = ['story', 'order']
+        # constraints = [
+        #     models.UniqueConstraint(
+        #         fields=['story', 'order'],
+        #         name='A chapter with that number already exists.')]
 
     def __str__(self):
         return self.title

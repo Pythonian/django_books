@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Stories{% endblock %}
+{% block title %}Books{% endblock %}
 
 {% block content %}
 <header class="bg-dark py-3">
@@ -7,8 +7,7 @@
         <div class="row">
             <div class="col-9">
                 <div class="my-5">
-                    <h1 class="fw-bolder text-white">Member stories</h1>
-                    <p class="lead fw-normal text-white-50">Find stories written by members of the site for your reading pleasure.</p>
+                    <h1 class="fw-bolder text-white">African books</h1>
                 </div>
             </div>
         </div>
@@ -17,10 +16,10 @@
 
 <section class="container my-5">
     <div class="row gy-3">
-        {% for story in stories %}
+        {% for book in books %}
         <div class="col-lg-3">
-            {% include '_story_list.html' %}
-            </div>
+            {% include '_book_list.html' %}
+        </div>
         {% empty %}
             <p>No data available.</p>
         {% endfor %}
