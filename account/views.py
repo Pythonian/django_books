@@ -24,12 +24,17 @@ class SignUpView(SuccessMessageMixin, CreateView):
 
 
 def profile(request):
+    return render(
+        request, 'profile.html', {})
+
+
+def library(request):
     books = Book.objects.filter(favorite=request.user)
     favorite = bool
     if Book.objects.filter(favorite=request.user).exists():
         favorite = True
     return render(
-        request, 'profile.html',
+        request, 'library.html',
         {'books': books, 'favorite': favorite})
 
 

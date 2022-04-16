@@ -8,14 +8,7 @@
     <div class="container">
         <div class="row">
             <aside class="col-lg-3">
-                <div class="card p-3 h-100">
-                    <nav class="nav flex-column nav-pills"> 
-                        <a class="nav-link" href="{% url 'profile' %}">My Profile</a>
-                        <a class="nav-link active" href="{% url 'stories' %}">My Stories</a>
-                        <a class="nav-link" href="{% url 'settings' %}">Settings</a>
-                        <a class="nav-link" href="{% url 'logout' %}">Log out</a> 
-                    </nav>
-                </div>
+                {% include '_account_nav.html' %}
             </aside>
             <div class="col-lg-9">
                 {% include '_alerts.html' %}

@@ -9,6 +9,9 @@ class Genre(models.Model):
     name = models.CharField(max_length=50)
     slug = models.CharField(max_length=50)
 
+    class Meta:
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 
@@ -32,7 +35,7 @@ class Book(models.Model):
     pages = models.PositiveIntegerField()
     summary = models.TextField()
     isbn = models.CharField(max_length=20,
-                            verbose_name="ISBN number of the book.")
+                            verbose_name="ISBN number.")
     favorite = models.ManyToManyField(
         User, related_name='favorites', blank=True)
     impressions = models.PositiveIntegerField(default=0)
@@ -44,6 +47,10 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('book_detail',
+                       kwargs={'slug': self.slug})
 
 
 class Request(models.Model):

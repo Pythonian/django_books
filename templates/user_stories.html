@@ -7,16 +7,9 @@
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row">
-            <aside class="col-lg-3">
-                <div class="card p-3 h-100">
-                    <nav class="nav flex-column nav-pills"> 
-                    	<a class="nav-link" href="{% url 'profile' %}">My Profile</a>
-                    	<a class="nav-link active" href="{% url 'stories' %}">My Stories</a>
-                    	<a class="nav-link" href="{% url 'settings' %}">Settings</a>
-                    	<a class="nav-link" href="{% url 'logout' %}">Log out</a> 
-                    </nav>
-                </div>
-            </aside>
+            <div class="col-lg-3">
+                {% include '_account_nav.html' %}
+            </div>
             <div class="col-lg-9">
                 {% include '_alerts.html' %}
                 {% for story in stories %}
@@ -36,7 +29,7 @@
                                     <h6>Chapters:</h6>
                                     {% for chapter in story.chapters.all %}
                                     <span>{{ chapter.order }}</span>
-                                    <span><a href="">{{ chapter.title }}</a></span>
+                                    <span><a href="{% url 'story:chapter_detail' story.slug chapter.pk %}">{{ chapter.title }}</a></span>
                                     <br>
                                     {% endfor %}
                                 </div>

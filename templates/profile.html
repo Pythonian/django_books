@@ -7,23 +7,16 @@
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row">
-            <aside class="col-lg-3">
-                <div class="card p-3 h-100">
-                    <nav class="nav flex-column nav-pills"> 
-                    	<a class="nav-link active" href="{% url 'profile' %}">My Profile</a>
-                    	<a class="nav-link" href="{% url 'stories' %}">My Stories</a>
-                    	<a class="nav-link" href="{% url 'settings' %}">Settings</a>
-                    	<a class="nav-link" href="{% url 'logout' %}">Log out</a> 
-                    </nav>
-                </div>
-            </aside>
+            <div class="col-lg-3">
+                {% include '_account_nav.html' %}
+            </div>
             <div class="col-lg-9">
                 {% include '_alerts.html' %}
                 <div class="card mb-4">
                     <div class="card-body">
                     	<header class="d-md-flex">
                             <div class="flex-shrink-0">
-                                <img class="rounded-circle" height="50px" width="50px" src="{% if request.user.profile.avatar %}{{ request.user.profile.avatar.url }}{% else %}https://via.placeholder.com/50x50{% endif %}" alt="Sample Image">
+                                <img class="rounded-circle" height="50px" width="50px" src="{% if request.user.profile.avatar %}{{ request.user.profile.avatar.url }}{% else %}https://via.placeholder.com/50x50{% endif %}" alt="User">
                             </div>
                             <div class="flex-grow-1 ms-3">
                                 <h5 class="m-0">{{ request.user.get_full_name|default:request.user.username|title }}</h5>
@@ -34,39 +27,15 @@
                             </div>
                         </header>
                     </div>
-                </div>
-                {% for book in books %}
-                <div class="card mb-3">
-                    <div class="row g-0">
-                        
-                        <div class="d-flex">
-                            <div class="flex-shrink-0">
-                                <img src="{{ book.cover.url }}" height="330" width="220" class="" alt="{{ book.title }}">
-                            </div>
-                            <div class="flex-grow-1 ms-3 p-3">
-                                <a href="{% url 'book_detail' book.id %}" class="h5 mb-1 title">{{ book.title }}</a>
-                                <p class="mb-3 text-muted">{{ book.author }}</p>
-                                <div class="mb-3">{{ book.summary|linebreaks }}</div>
-                                <div class="row row-cols-auto gx-2 gy-3 align-items-center">
-                                    <div>
-                                        {% if favorite %}
-                                            <a href="{% url 'add_to_library' book.id %}" class="btn  btn-warning">Remove from library</a> 
-                                        {% else %}
-                                            <a href="{% url 'add_to_library' book.id %}" class="btn  btn-success">Add to library</a>
-                                        {% endif %}
-                                    </div>
-                                     
-                                    <div> 
-                                        <a href="{{ book.book_file.url }}" target="_blank" class="btn  btn-info" download> Download now </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="card-footer">
+                        <h6>About me</h6>
+                        {% if request.user.profile.bio %}
+                            {{ request.user.profile.bio|linebreaks }}
+                        {% else %}
+                            <a href="{% url 'settings' %}">Add bio</a>
+                        {% endif %}
                     </div>
                 </div>
-                {% empty %}
-                <p class="text-center">You do not have any book yet in your library.</p>
-                {% endfor %}
             </div>
         </div>
     </div>

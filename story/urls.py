@@ -15,4 +15,6 @@ urlpatterns = [
          views.update_chapter, name='update_chapter'),
     path('<int:story_pk>/chapter/<int:chapter_pk>/delete/',
          views.delete_chapter, name='delete_chapter'),
+    path('<slug:story_slug>/chapter/<int:chapter_pk>/',
+         views.chapter_detail, name='chapter_detail'),
 ]

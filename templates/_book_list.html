@@ -1,5 +1,5 @@
 <div class="card shadow border-0 mb-4">
-    <a href="{% url 'book_detail' book.id %}">
+    <a href="{{ book.get_absolute_url }}">
         <img src="{{ book.cover.url }}" class="card-img-top" height="350" alt="{{ book.title }}">
     </a>
     <div class="position-absolute text-start top-0 start-0 w-100 p-2"> 
@@ -7,7 +7,7 @@
     </div>
     <div class="card-body">
         <div class="h5">
-            <a href="{% url 'book_detail' book.id %}" class="text-decoration-none">{{ book.title }}</a>
+            <a href="{{ book.get_absolute_url }}" class="text-decoration-none">{{ book.title }}</a>
         </div>
         <p>By: {{ book.author }}</p>
     </div>

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}My Library{% endblock %}
+
+{% block content %}
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {% include '_account_nav.html' %}
+            </div>
+            <div class="col-lg-9">
+                {% include '_alerts.html' %}
+                {% for book in books %}
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <img src="{{ book.cover.url }}" height="330" width="220" class="" alt="{{ book.title }}">
+                            </div>
+                            <div class="flex-grow-1 ms-3 p-3">
+                                <a href="{{ book.get_absolute_url }}" class="h5 mb-1 title">{{ book.title }}</a>
+                                <p class="mb-3 text-muted">{{ book.author }}</p>
+                                <div class="mb-3">{{ book.summary|linebreaks }}</div>
+                                <div class="row row-cols-auto gx-2 gy-3 align-items-center">
+                                    <div>
+                                        {% if favorite %}
+                                            <a href="{% url 'add_to_library' book.id %}" class="btn  btn-warning">Remove from library</a> 
+                                        {% else %}
+                                            <a href="{% url 'add_to_library' book.id %}" class="btn  btn-success">Add to library</a>
+                                        {% endif %}
+                                    </div>
+                                     
+                                    <div> 
+                                        <a href="{{ book.book_file.url }}" target="_blank" class="btn  btn-info" download> Download now </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-center">You do not have any book yet in your library.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

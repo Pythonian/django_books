@@ -7,6 +7,7 @@ from .forms import (
     StoryForm, ChapterForm, StoryDeleteForm, ChapterDeleteForm)
 
 
+@login_required
 def create_story(request):
     if request.method == 'POST':
         form = StoryForm(request.POST, request.FILES)
@@ -25,8 +26,9 @@ def create_story(request):
         {'form': form, 'create': True})
 
 
+@login_required
 def change_story(request, pk):
-    story = get_object_or_404(Story, pk=pk)
+    story = get_object_or_404(Story, pk=pk, author=request.user)
     if request.method == 'POST':
         form = StoryForm(
             request.POST, request.FILES,
@@ -44,6 +46,7 @@ def change_story(request, pk):
         {'form': form, 'story': story})
 
 
+@login_required
 def add_chapter(request, pk):
     story = get_object_or_404(
         Story, pk=pk, author=request.user)
@@ -64,6 +67,7 @@ def add_chapter(request, pk):
         {'story': story, 'form': form, 'create': True})
 
 
+@login_required
 def update_chapter(request, story_pk, chapter_pk):
     story = get_object_or_404(
         Story, pk=story_pk, author=request.user)
@@ -129,3 +133,13 @@ def story_delete(request, pk):
     return render(
         request, 'story/delete.html',
         {'story': story, 'form': form})
+
+
+def chapter_detail(request, story_slug, chapter_pk):
+    story = get_object_or_404(
+        Story, slug=story_slug, author=request.user)
+    chapter = get_object_or_404(Chapter, pk=chapter_pk, story=story)
+
+    return render(
+        request, 'story/chapter.html',
+        {'story': story, 'chapter': chapter})

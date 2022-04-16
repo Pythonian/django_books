@@ -24,6 +24,7 @@
         {% empty %}
             <p>No data available.</p>
         {% endfor %}
+        {% include "_pagination.html" with page_obj=stories %}
     </div>
 </section>
 

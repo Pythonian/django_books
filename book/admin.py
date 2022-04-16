@@ -8,6 +8,7 @@ from .models import Genre, Book, Request
 class BookAdmin(admin.ModelAdmin):
     list_display = ['title', 'genre', 'author', 'publisher', 'pages', 'isbn']
     search_fields = ['title', 'author', 'publisher', 'isbn']
+    list_filter = ['genre']
     prepopulated_fields = {'slug': ('title',)}
 
 

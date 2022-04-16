@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from story.models import Story
 from book.models import Genre, Book
 from book.forms import RequestForm
+
+from .utils import mk_paginator
 
 
 def home(request):
@@ -18,22 +21,26 @@ def home(request):
 
 def genres(request):
     genres = Genre.objects.all()
+    genres = mk_paginator(request, genres, 12)
     return render(request, 'genres.html', {'genres': genres})
 
 
 def books(request):
     books = Book.objects.all()
+    books = mk_paginator(request, books, 8)
     return render(request, 'books.html', {'books': books})
 
 
 def stories(request):
     stories = Story.objects.all()
+    stories = mk_paginator(request, stories, 8)
     return render(request, 'stories.html', {'stories': stories})
 
 
 def genre_detail(request, slug):
     genre = get_object_or_404(Genre, slug=slug)
     books = genre.books.all()
+    books = mk_paginator(request, books, 8)
     return render(request, 'genre_detail.html',
                   {'genre': genre, 'books': books})
 
@@ -58,8 +65,8 @@ def request(request):
     return render(request, 'request.html', {'form': form})
 
 
-def book_detail(request, id):
-    book = get_object_or_404(Book, id=id)
+def book_detail(request, slug):
+    book = get_object_or_404(Book, slug=slug)
     favorite = bool
     if book.favorite.filter(id=request.user.id).exists():
         favorite = True
@@ -67,6 +74,7 @@ def book_detail(request, id):
                   {'book': book, 'favorite': favorite})
 
 
+@login_required
 def add_to_library(request, id):
     book = get_object_or_404(Book, id=id)
     if book.favorite.filter(id=request.user.id).exists():

@@ -26,7 +26,7 @@
                         <h6>Chapters ({{ story.chapters.count }}):</h6>
                         {% for chapter in story.chapters.all %}
                             <dt class="col-1">{{ chapter.order|apnumber|title }}</dt>
-                            <dd class="col-11"><a href="">{{ chapter.title }}</a></dd>
+                            <dd class="col-11"><a href="{% url 'story:chapter_detail' story.slug chapter.pk %}">{{ chapter.title }}</a></dd>
                         {% endfor %}
                     </div>
                 </div>
