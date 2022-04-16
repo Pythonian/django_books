@@ -1,4 +1,4 @@
-<div class="card p-3">
+<div class="card p-3 mb-4">
     <nav class="nav flex-column nav-pills"> 
         <a class="nav-link {% url 'profile' as profile_url %}{% if request.get_full_path == profile_url %}active{% endif %}" href="{% url 'profile' %}">My Profile</a>
         <a class="nav-link {% url 'library' as library_url %}{% if request.get_full_path == library_url %}active{% endif %}" href="{% url 'library' %}">My Library</a>
