@@ -1,7 +1,8 @@
 <div class="card py-3 bg-dark">
     <a href="{{ genre.get_absolute_url }}" class="text-decoration-none">
-        <div class="card-body py-5">
-            <h5 class="text-center text-white text-center">{{ genre.name }}</h5>
+        <div class="card-body py-5 text-center text-white">
+            <h5>{{ genre.name }}</h5>
+            <span>{{ genre.books.count }} book{{ genre.books.count|pluralize }}</span>
         </div>
     </a>
 </div> 

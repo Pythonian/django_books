@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'story',
     'crispy_forms',
     'crispy_bootstrap5',
-    'django_extensions',
+    # 'django_extensions',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -148,6 +149,6 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-GRAPH_MODELS = {
-    'app_labels': ["account", "book", "story"],
-}
+# GRAPH_MODELS = {
+#     'app_labels': ["account", "book", "story"],
+# }

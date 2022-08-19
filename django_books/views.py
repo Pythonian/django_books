@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -72,6 +72,14 @@ def book_detail(request, slug):
         favorite = True
     return render(request, 'book_detail.html',
                   {'book': book, 'favorite': favorite})
+
+
+@login_required
+def book_read_online(request, id):
+    book = get_object_or_404(Book, id=id)
+    response = HttpResponse(book.book_file, content_type='application/pdf')
+    response['Content-Disposition'] = 'inline'
+    return response
 
 
 @login_required

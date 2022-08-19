@@ -6,8 +6,8 @@ User = settings.AUTH_USER_MODEL
 
 
 class Genre(models.Model):
-    name = models.CharField(max_length=50)
-    slug = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.CharField(max_length=50, unique=True)
 
     class Meta:
         ordering = ['name']
@@ -22,8 +22,9 @@ class Genre(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=100,
-                             help_text="The title of the book.")
-    slug = models.SlugField(max_length=100)
+                             help_text="The title of the book.",
+                             unique=True)
+    slug = models.SlugField(max_length=100, unique=True)
     genre = models.ForeignKey(
         Genre, on_delete=models.PROTECT, related_name='books')
     book_file = models.FileField(upload_to='books')

@@ -15,6 +15,7 @@ urlpatterns = [
     path('stories/', views.stories, name='stories'),
     path('request/', views.request, name='request'),
     path('genre/<slug:slug>/', views.genre_detail, name='genre_detail'),
+    path('book/read/<int:id>/', views.book_read_online, name='read'),
     path('book/<slug:slug>/', views.book_detail, name='book_detail'),
     path('update-library/<int:id>/',
          views.add_to_library, name='add_to_library'),
