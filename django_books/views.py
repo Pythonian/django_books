@@ -1,11 +1,14 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseRedirect, HttpResponse
+import os
+
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import FileResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
 
-from story.models import Story
-from book.models import Genre, Book
 from book.forms import RequestForm
+from book.models import Book, Genre
+from story.models import Story
 
 from .utils import mk_paginator
 
@@ -77,9 +80,18 @@ def book_detail(request, slug):
 @login_required
 def book_read_online(request, id):
     book = get_object_or_404(Book, id=id)
-    response = HttpResponse(book.book_file, content_type='application/pdf')
+    filepath = os.path.join(settings.MEDIA_ROOT, str(book.book_file))
+    response = FileResponse(open(filepath, 'rb'), content_type='application/pdf')
     response['Content-Disposition'] = 'inline'
     return response
+
+    # try:
+    #     response = FileResponse(open(filepath, 'rb'),
+    #                             content_type='application/pdf')
+    #     response['Content-Disposition'] = 'inline'
+    #     return response
+    # except FileNotFoundError:
+    #     raise Http404()
 
 
 @login_required
