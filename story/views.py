@@ -58,7 +58,7 @@ def add_chapter(request, pk):
             chapter.save()
             messages.success(
                 request,
-                f'You have successfully added chapter {chapter.order}.')
+                f'You have successfully added chapter {chapter.order}. You can add another below.')
             return redirect('story:change_story', story.pk)
     else:
         form = ChapterForm()
@@ -127,7 +127,7 @@ def story_delete(request, pk):
             story.delete()
             messages.success(
                 request, "Story successfully deleted.")
-            return redirect('stories')
+            return redirect('profile')
     else:
         form = StoryDeleteForm(instance=story)
     return render(

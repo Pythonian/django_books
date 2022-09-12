@@ -19,8 +19,10 @@
                     <div class="card-body">
                         <form method="post" action="" enctype="multipart/form-data">
                             {% csrf_token %}
+                            {{ form.media }}
                             {{ form|crispy }}
                             <button class="btn btn-primary" type="submit">{% if create %}Create{% else %}Update{% endif %}</button>
+                            {% if not create %} <a href="{% url 'story:delete' story.pk %}" class="btn btn-danger">Delete</a>{% endif %}
                         </form>
                     </div>
                 </div>

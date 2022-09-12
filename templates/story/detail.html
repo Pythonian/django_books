@@ -19,7 +19,7 @@
                     &bull; Created: {{ story.created|date:"F, Y" }}
                 </div>
 
-                <p>{{ story.description|linebreaks }}</p>
+                <p>{{ story.description|safe }}</p>
 
                 <div class="row mb-3">
                     <h6>Chapters ({{ story.chapters.count }}):</h6>

@@ -3,11 +3,14 @@ from django.utils.text import slugify
 from django.conf import settings
 from django.urls import reverse
 
+from ckeditor.fields import RichTextField
+
 
 class Story(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
-    description = models.TextField(max_length=2000)
+    description = RichTextField()
+    # description = models.TextField(max_length=2000)
     impressions = models.PositiveIntegerField(default=0)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='stories',
@@ -38,7 +41,7 @@ class Chapter(models.Model):
     order = models.PositiveSmallIntegerField(
         'Chapter number')
     title = models.CharField(max_length=200)
-    body = models.TextField()
+    body = RichTextField()
     impressions = models.PositiveIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

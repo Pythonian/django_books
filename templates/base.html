@@ -4,15 +4,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <link href="{% static 'styles/bootstrap.min.css' %}" rel="stylesheet" />
     <title>{% block title %}{% endblock %} | African Lit.</title>
-    <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <style>
+        .django-ckeditor-widget {
+            display: block !important;
+        }
+    </style>
+
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column vh-100">
     <main class="flex-shrink-0">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
@@ -60,7 +61,6 @@
         </div>
     </footer>
     
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'scripts/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
