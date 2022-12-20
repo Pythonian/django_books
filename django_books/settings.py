@@ -150,6 +150,8 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.core.mail import send_mail
 
 
 from .models import Genre, Book, Request
@@ -19,4 +20,15 @@ class GenreAdmin(admin.ModelAdmin):
 
 @admin.register(Request)
 class RequestAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'email', 'title', 'author']
+    list_display = ['full_name', 'email', 'title', 'author', 'request_approved']
+    list_filter = ['request_approved']
+
+    def save_model(self, request, obj, form, change):
+        if obj.request_approved is True:
+            send_mail(
+                'Congratulations! Request Completed',
+                'Your book request has now been completed. Please login to the site to check it out.',
+                'admin@africanlit.com',
+                [obj.email],
+                fail_silently=False)
+        super(RequestAdmin, self).save_model(request, obj, form, change)

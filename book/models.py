@@ -59,6 +59,7 @@ class Request(models.Model):
     email = models.EmailField()
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100, blank=True)
+    request_approved = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
